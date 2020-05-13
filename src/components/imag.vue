@@ -1,8 +1,7 @@
 <template>
   <div
     class="wrapper"
-    v-on:click="$emit('showpicture', source)"
-    v-b-modal.picture>
+    v-on:click="$emit('showpicture', index)">
     <b-img-lazy
       thumbnail
       :src="getURL()"
@@ -21,6 +20,8 @@ export default {
     source: {
       type: String,
       required: true
+    },
+    index: {
     }
   },
   data: function() {

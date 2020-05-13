@@ -1,5 +1,15 @@
 <template>
   <div class="main">
+
+    <overlay
+      v-if="overlay_visible"
+      v-on:close="overlay_visible = false"
+      v-bind:albums="this.albums"
+      v-bind:selected="this.selected"
+      v-bind:index="this.index"
+    >
+    </overlay>
+
     <div class="header">
       <img id="tent" src="../assets/tent.jpg">
       </div>
@@ -7,7 +17,6 @@
       <div id="logo">
         <img src="../assets/logo.png">
         </div>
-
 
         <div class="container" id="content">
 
@@ -34,8 +43,9 @@
           </b-row>
 
           <b-row id="picview" class="justify-content-center" align-v="center">
-            <image-item v-for="image in current"
-              v-bind:key="image"
+            <image-item v-for="(image, index) in albums[selected].data"
+              v-bind:key="index"
+              v-bind:index="index"
               v-bind:source="image"
               v-on:showpicture="showpic"></image-item>
           </b-row>
@@ -45,30 +55,20 @@
           </b-row>
         </div>
 
-        <b-modal centered size="xl" id="picture" scrollable>
-          <template v-slot:modal-header="{ }">{{modalpic.filename}}</template>
-          <b-img center fluid :src="modalpic.path"></b-img>
-
-
-          <template v-slot:modal-footer="{ close }">
-              <b-button :href="modalpic.fullpath" :download="modalpic.filename" size="sm" variant="outline-secondary" >Download Fullsize</b-button>
-            <b-button size="sm" variant="outline-secondary" @click="close('forget')">Close</b-button>
-          </template>
-
-        </b-modal>
-
       </div>
     </template>
 
 <script>
 import ImageItem from './imag.vue';
+import Overlay from './overlay.vue';
 const officialData= require('../assets/official.json');
 const highlightsData = require('../assets/highlights.json');
 const allData = require('../assets/all.json');
 export default {
   name: 'home',
   components: {
-    ImageItem
+    ImageItem,
+    Overlay
   },
   data: function() {
     return {
@@ -87,27 +87,24 @@ export default {
         }
       },
       selected: '',
-      current: [],
-      modalpic: {
-        path: "",
-        fullpath: "",
-        filename: ""
-      }
+      albums: {"": {data: "", name: ""}},
+      index: 0,
+      overlay_visible: false,
     }
   },
   methods: {
-    showpic: function(path) {
-      this.modalpic.filename = path;
-      this.modalpic.path = "large/" + path;
-      this.modalpic.fullpath = "large/" + path; 
+    showpic: function(index) {
+      this.index = index;
+      this.overlay_visible = true;
     },
     changeSet: function(set) {
       this.selected = set.name
-      this.current= set.data;
-
     }
   },
   mounted() {
+    this.albums[this.sets.official.name] = this.sets.official;
+    this.albums[this.sets.highlights.name] = this.sets.highlights;
+    this.albums[this.sets.all.name] = this.sets.all;
     this.changeSet(this.sets.highlights);
   }
 }
@@ -166,6 +163,7 @@ export default {
 #picview {
   padding-top: 5px;
 }
+
 
 #footer {
   font-size: x-large;
