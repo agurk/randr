@@ -1,29 +1,30 @@
 <template>
-  <div id="overlay" ref="overlay2"
+  <div id="overlay"
     v-on:keydown="cursorEvent(event)"
     v-touch:swipe.left="next"
     v-touch:swipe.right="prev">
 
-      <div id="close" class="control" v-on:click="$emit('close')">
-        <img src="../assets/close.svg">
-      </div>
+    <div id="close" class="control" v-on:click="$emit('close')">
+      <img src="../assets/close.svg">
+    </div>
 
-      <div id="download" class="control" >
-        <a v-bind:href="fullpath()" v-bind:download="filename()">
+    <div id="download" class="control" >
+      <a v-bind:href="fullpath()" v-bind:download="filename()">
         <img src="../assets/download.svg">
-        </a>
-      </div>
+      </a>
+    </div>
 
-      <b-img-lazy thumbnail blank-color="white" id="image" :src="getURL()" v-on:click="$emit('close')"></b-img-lazy>
-      
+    <div id="image" v-on:click="$emit('close')">
+      <b-img-lazy id="image_content" thumbnail blank-color="white" :src="getURL()" ></b-img-lazy>
+    </div>
 
-      <div id="prev" class="control" v-on:click="prev()">
-        <img src="../assets/back.svg">
-      </div>
+    <div id="prev" class="control" v-on:click="prev()">
+      <img src="../assets/back.svg">
+    </div>
 
-      <div id="next" class="control" v-on:click="next()">
-        <img src="../assets/next.svg">
-      </div>
+    <div id="next" class="control" v-on:click="next()">
+      <img src="../assets/next.svg">
+    </div>
 
   </div>
 </template>
@@ -121,10 +122,18 @@ export default {
 }
 
 #image {
-  max-width: 100%;
-  max-height: 100%;
+  display: flex;
   margin: 5px;
   cursor: zoom-out;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+#image_content {
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .nav_button {
