@@ -3,6 +3,7 @@
 
     <overlay
       v-if="overlay_visible"
+      v-scroll-lock="overlay_visible"        
       v-on:close="overlay_visible = false"
       v-bind:albums="this.albums"
       v-bind:selected="this.selected"
@@ -119,7 +120,6 @@ export default {
   width: 100%;
   display: block;
   position: fixed;
-  overflow: hidden;
   background-color: rgba(245, 237, 212, 1);
 }
 

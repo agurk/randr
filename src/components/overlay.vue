@@ -1,19 +1,30 @@
 <template>
-  <div ref="overlay"  v-on:keydown="cursorEvent(event)">
-    <div id="overlay"  v-on:click="$emit('close')" >
-      <b-img id="image" :src="getURL()"></b-img>
+  <div id="overlay" ref="overlay2"
+    v-on:keydown="cursorEvent(event)"
+    v-touch:swipe.left="next"
+    v-touch:swipe.right="prev">
 
-    </div>
+      <div id="close" class="control" v-on:click="$emit('close')">
+        <img src="../assets/close.svg">
+      </div>
 
-    <div id="overlay_footer">
-      <b-button @click="prev()" size="sm" variant="secondary" >&lt; Prev</b-button>
-      &nbsp;
-      <b-button :href="fullpath()" :download="filename()" size="sm" variant="secondary" >Download Fullsize</b-button>
-      &nbsp;
-      <b-button size="sm" variant="secondary" @click="$emit('close')">Close</b-button>
-      &nbsp;
-      <b-button @click="next()" size="sm" variant="secondary" >Next &gt;</b-button>
-    </div>
+      <div id="download" class="control" >
+        <a v-bind:href="fullpath()" v-bind:download="filename()">
+        <img src="../assets/download.svg">
+        </a>
+      </div>
+
+      <b-img-lazy thumbnail blank-color="white" id="image" :src="getURL()" v-on:click="$emit('close')"></b-img-lazy>
+      
+
+      <div id="prev" class="control" v-on:click="prev()">
+        <img src="../assets/back.svg">
+      </div>
+
+      <div id="next" class="control" v-on:click="next()">
+        <img src="../assets/next.svg">
+      </div>
+
   </div>
 </template>
 
@@ -41,7 +52,7 @@ export default {
       }
     },
     next: function() {
-      if (this.index < this.albums[this.selected].data.length) {
+      if (this.index + 1 < this.albums[this.selected].data.length) {
         this.index++;
       }
     },
@@ -62,7 +73,7 @@ export default {
     }
   },
   mounted() {
-    this.$refs.overlay.focus();
+    this.$refs.next_thing.focus();
   }
 };
 </script>
@@ -74,25 +85,53 @@ export default {
   width: 100%;
   height: 100%;
   background-color: rgba(0,0,0,0.75);
-  z-index: 2;
+  z-index: 4;
   align-items: center;
   justify-content: center;
+}
+
+.control {
+  position: fixed;
+  padding: 10px;
+  z-index: 3;
+}
+
+.control:hover {
+  background-color: rgb(0,0,0);
+}
+
+#close {
+  top: 0;
+  right: 0;
+}
+
+#download{
+  top: 0;
+  left: 0;
+}
+
+#prev{
+  bottom: 0;
+  left: 0;
+}
+
+#next {
+  bottom: 0;
+  right: 0;
 }
 
 #image {
-  transform: translateY(-20px);
   max-width: 100%;
-  max-height: 90%;
+  max-height: 100%;
+  margin: 5px;
+  cursor: zoom-out;
 }
 
-#overlay_footer {
-  position: fixed;
-  width: 100%;
-  bottom: 0;
-  margin-bottom: 6px;
-  z-index: 3;
-  align-items: center;
-  justify-content: center;
+.nav_button {
+  margin-left: 3px;
+  margin-right: 3px;
+  margin-bottom: 2px;
+  margin-top: 2px;
 }
 
 #arrow {

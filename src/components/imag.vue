@@ -40,6 +40,6 @@ export default {
 <style>
 .wrapper {
     padding: 4px;
-    cursor: pointer;
+    cursor: zoom-in;
   }
 </style>
