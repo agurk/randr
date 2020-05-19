@@ -1,8 +1,11 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-import BootstrapVue from 'bootstrap-vue'
-Vue.use(BootstrapVue)
+import {LayoutPlugin} from 'bootstrap-vue'
+Vue.use(LayoutPlugin)
+
+import {ImagePlugin} from 'bootstrap-vue'
+Vue.use(ImagePlugin)
 
 import Vue2TouchEvents from 'vue2-touch-events'
 Vue.use(Vue2TouchEvents)

@@ -15,15 +15,15 @@
     </div>
 
     <div id="image" v-on:click="$emit('close')">
-      <b-img-lazy id="image_content" thumbnail blank-color="white" :src="getURL()" ></b-img-lazy>
+      <b-img id="image_content" thumbnail blank-color="white" :key="getURL()" :src="getURL()" ></b-img>
     </div>
 
     <div id="prev" class="control" v-on:click="prev()">
-      <img src="../assets/back.svg">
+      <img src="../assets/arrow.svg">
     </div>
 
-    <div id="next" class="control" v-on:click="next()">
-      <img src="../assets/next.svg">
+    <div id="next" ref="next_thing" class="control" v-on:click="next()">
+      <img src="../assets/arrow.svg">
     </div>
 
   </div>
@@ -32,10 +32,15 @@
 <script>
 export default {
   name: "Overlay",
+  data: function() {
+    return {
+      index: 0
+    }
+  },
   props: [
     'albums',
     'selected',
-    'index'
+    'initial_index'
   ],
   methods: {
     getURL: function() {
@@ -74,6 +79,7 @@ export default {
     }
   },
   mounted() {
+    this.index = this.initial_index;
     this.$refs.next_thing.focus();
   }
 };
@@ -81,20 +87,22 @@ export default {
 
 <style>
 #overlay {
-  position: fixed;
-  display: flex;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.75);
-  z-index: 4;
   align-items: center;
   justify-content: center;
+  background-color: rgba(0,0,0,0.75);
+  display: flex;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  padding: 4px;
+  z-index: 4;
 }
 
 .control {
   position: fixed;
-  padding: 10px;
+  padding: 15px;
   z-index: 3;
+  cursor: pointer;
 }
 
 .control:hover {
@@ -114,6 +122,7 @@ export default {
 #prev{
   bottom: 0;
   left: 0;
+  transform: rotate(180deg);
 }
 
 #next {

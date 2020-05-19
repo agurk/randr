@@ -7,7 +7,7 @@
       v-on:close="overlay_visible = false"
       v-bind:albums="this.albums"
       v-bind:selected="this.selected"
-      v-bind:index="this.index"
+      v-bind:initial_index="this.index"
     >
     </overlay>
 
