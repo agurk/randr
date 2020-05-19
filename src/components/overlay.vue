@@ -1,8 +1,9 @@
-<template>
-  <div id="overlay"
-    v-on:keydown="cursorEvent(event)"
+<template >
+  <div ref="ovrly" id="overlay"
+    v-on:keydown="cursorEvent()"
     v-touch:swipe.left="next"
-    v-touch:swipe.right="prev">
+    v-touch:swipe.right="prev"
+  tabindex="0">
 
     <div id="close" title="Close zoom" class="control" v-on:click="$emit('close')">
       <img src="../assets/close.svg">
@@ -22,7 +23,7 @@
       <img src="../assets/arrow.svg">
     </div>
 
-    <div id="next" title="Next image" v-if="this.index + 1 < this.albums[this.selected].data.length" ref="next_thing" class="control" v-on:click="next()">
+    <div id="next" title="Next image" v-if="this.index + 1 < this.albums[this.selected].data.length" class="control" v-on:click="next()">
       <img src="../assets/arrow.svg">
     </div>
 
@@ -47,7 +48,7 @@ export default {
       return "large/" + this.albums[this.selected].data[this.index];
     },
     fullpath: function() {
-      return "large/" + this.albums[this.selected].data[this.index];
+      return "full/" + this.albums[this.selected].data[this.index];
     },
     filename: function() {
       return this.albums[this.selected].data[this.index];
@@ -67,7 +68,6 @@ export default {
       if (this.index + 1 < this.albums[this.selected].data.length) {
         const image = new Image();
         image.src = "large/" + this.albums[this.selected].data[this.index+1];
-        console.log("preloading");
       }
     },
     cursorEvent: function(e) {
@@ -88,7 +88,7 @@ export default {
   },
   mounted() {
     this.index = this.initial_index;
-    this.$refs.next_thing.focus();
+    this.$refs.ovrly.focus();
     this.preloadNext();
   }
 };
