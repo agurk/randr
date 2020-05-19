@@ -4,11 +4,11 @@
     v-touch:swipe.left="next"
     v-touch:swipe.right="prev">
 
-    <div id="close" class="control" v-on:click="$emit('close')">
+    <div id="close" title="Close zoom" class="control" v-on:click="$emit('close')">
       <img src="../assets/close.svg">
     </div>
 
-    <div id="download" class="control" >
+    <div id="download" title="Download original" class="control" >
       <a v-bind:href="fullpath()" v-bind:download="filename()">
         <img src="../assets/download.svg">
       </a>
@@ -18,11 +18,11 @@
       <b-img id="image_content" thumbnail blank-color="white" :key="getURL()" :src="getURL()" ></b-img>
     </div>
 
-    <div id="prev" class="control" v-on:click="prev()">
+    <div id="prev" title="Previous image" v-if="this.index > 0" class="control" v-on:click="prev()">
       <img src="../assets/arrow.svg">
     </div>
 
-    <div id="next" ref="next_thing" class="control" v-on:click="next()">
+    <div id="next" title="Next image" v-if="this.index + 1 < this.albums[this.selected].data.length" ref="next_thing" class="control" v-on:click="next()">
       <img src="../assets/arrow.svg">
     </div>
 
@@ -60,6 +60,14 @@ export default {
     next: function() {
       if (this.index + 1 < this.albums[this.selected].data.length) {
         this.index++;
+        this.preloadNext();
+      }
+    },
+    preloadNext: function() {
+      if (this.index + 1 < this.albums[this.selected].data.length) {
+        const image = new Image();
+        image.src = "large/" + this.albums[this.selected].data[this.index+1];
+        console.log("preloading");
       }
     },
     cursorEvent: function(e) {
@@ -81,6 +89,7 @@ export default {
   mounted() {
     this.index = this.initial_index;
     this.$refs.next_thing.focus();
+    this.preloadNext();
   }
 };
 </script>
