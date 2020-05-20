@@ -157,6 +157,7 @@ export default {
 
 .active-link {
   font-weight: bold;
+  text-decoration: underline;
 }
 
 #picview {
