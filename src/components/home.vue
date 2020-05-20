@@ -125,7 +125,7 @@ export default {
 
 #tent {
   margin-left: 50vw;
-  transform: translateX(-50vw);
+  transform: translateX(-50%);
 }
 
 #logo {
