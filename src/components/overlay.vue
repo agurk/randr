@@ -16,7 +16,7 @@
     </div>
 
     <div id="image" v-on:click="$emit('close')">
-      <b-img id="image_content" thumbnail blank-color="white" :key="getURL()" :src="getURL()" ></b-img>
+      <b-img id="image_content" thumbnail :key="getURL()" :src="getURL()" ></b-img>
     </div>
 
     <div id="prev" title="Previous image" v-if="this.index > 0" class="control" v-on:click="prev()">
@@ -101,8 +101,8 @@ export default {
   background-color: rgba(0,0,0,0.75);
   display: flex;
   position: fixed;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
   padding: 4px;
   z-index: 4;
 }
