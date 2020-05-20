@@ -10,13 +10,13 @@
     </div>
 
     <div id="download" title="Download original" class="control" >
-      <a v-bind:href="fullpath()" v-bind:download="filename()">
+      <a v-bind:href="$full_dir + filename()" v-bind:download="filename()">
         <img src="../assets/download.svg">
       </a>
     </div>
 
     <div id="image" v-on:click="$emit('close')">
-      <b-img id="image_content" thumbnail :key="getURL()" :src="getURL()" ></b-img>
+      <b-img id="image_content" thumbnail :key="$large_dir + filename()" :src="$large_dir + filename()" ></b-img>
     </div>
 
     <div id="prev" title="Previous image" v-if="this.index > 0" class="control" v-on:click="prev()">
@@ -44,12 +44,6 @@ export default {
     'initial_index'
   ],
   methods: {
-    getURL: function() {
-      return "large/" + this.albums[this.selected].data[this.index];
-    },
-    fullpath: function() {
-      return "full/" + this.albums[this.selected].data[this.index];
-    },
     filename: function() {
       return this.albums[this.selected].data[this.index];
     },
@@ -67,7 +61,7 @@ export default {
     preloadNext: function() {
       if (this.index + 1 < this.albums[this.selected].data.length) {
         const image = new Image();
-        image.src = "large/" + this.albums[this.selected].data[this.index+1];
+        image.src = this.$large_dir + this.albums[this.selected].data[this.index+1];
       }
     },
     cursorEvent: function(e) {

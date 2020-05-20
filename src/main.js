@@ -25,3 +25,7 @@ Vue.config.productionTip = false
 new Vue({
     render: h => h(App),
 }).$mount('#app')
+
+Vue.prototype.$thumb_dir = "photos/thumbs/"
+Vue.prototype.$large_dir = "photos/large/"
+Vue.prototype.$full_dir = "photos/full/"

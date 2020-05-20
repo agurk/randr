@@ -4,7 +4,7 @@
     v-on:click="$emit('showpicture', index)">
     <b-img-lazy
       thumbnail
-      :src="getURL()"
+      :src="$thumb_dir + source"
       height="180px"
       width="180px"
       :title="source"
@@ -29,11 +29,6 @@ export default {
       loaded: false
     }
   },
-  methods: {
-    getURL: function() {
-      return "thumbs/" + this.source;
-    }
-  }
 };
 </script>
 
