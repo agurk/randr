@@ -106,7 +106,7 @@ export default {
     this.albums[this.sets.official.name] = this.sets.official;
     this.albums[this.sets.highlights.name] = this.sets.highlights;
     this.albums[this.sets.all.name] = this.sets.all;
-    this.changeSet(this.sets.highlights);
+    this.changeSet(this.sets.all);
   }
 }
 </script>
